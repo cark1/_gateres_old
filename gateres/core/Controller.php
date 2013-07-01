@@ -15,27 +15,39 @@ class Controller{
 	
 	}//__construct
 	
-	protected function is($paramName,$value=null){
+	
+	protected function urlParam($_paramName){
 		
-		// 1. check if param exists
-		
-		if(isset($this->request->params[$paramName]) == false) return false;
-		
-		// 2. check if is passed a value
-		
-		if($value==null) return true;
-		
-		if(is_string($value)){ // if is a string
-			
-			return strcmp($this->request->params[$paramName],$value) == 0;
-			
-		}else{ // if is another type
-			
-			return $this->request->params[$paramName] == $value;
-			
+		if(isset($this->request->urlParams[$_paramName]) == false){
+			return null;
+		}else{
+			return $this->request->urlParams[$_paramName];
 		}
 		
-	}//is
+	}//urlParam
+	
+	
+	protected function bodyParam($_paramName,$_value=null){
+		
+		if(isset($this->request->bodyParams[$_paramName]) == false){
+			return null;
+		}else{
+			return $this->request->bodyParams[$_paramName];
+		}
+		
+	}//bodyParam
+	
+	
+	protected function pathParam($_paramName,$_value=null){
+		
+		if(isset($this->request->pathParams[$_paramName]) == false){
+			return null;
+		}else{
+			return $this->request->pathParams[$_paramName];
+		}
+		
+	}//pathParam
+	
 	
 	private function get(){}//get
 	
@@ -44,5 +56,6 @@ class Controller{
 	private function put(){}//put
 	
 	private function delete(){}//delete
+	
 	
 }//Controller

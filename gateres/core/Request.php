@@ -9,15 +9,14 @@ class Request{
 	public $method;
 	public $body;
 	
+	public $urlParams;
 	public $bodyParams;
 	public $pathParams;
-	public $urlParams;
-	public $params;
 	
 	public $languages;
 
 	
-	function __construct($_pathApi){
+	function __construct(){
 		
 		//headers
 		$this->headers = getallheaders();
@@ -28,40 +27,31 @@ class Request{
 		//body
 		$this->body = file_get_contents('php://input');
 		
-		//bodyParams
+		//urlParams (parse_str automatically urldecodes values)
+		if(isset($_SERVER['REDIRECT_QUERY_STRING'])){
+			parse_str($_SERVER['REDIRECT_QUERY_STRING'],$this->urlParams);
+		}
+		
+		//bodyParams (parse_str automatically urldecodes values)
 		parse_str($this->body,$this->bodyParams);
 
 		//pathParams
 		$this->pathParams = array();
-		$pathExploded = explode('/',$_SERVER['PATH_INFO']);
-		array_shift($pathExploded);
 		
-		for($i=0 , $length = count($pathExploded); $i<$length ; $i+=2){
+		if(isset($_SERVER['PATH_INFO'])){
 			
-			if(isset($pathExploded[$i+1])){
-				
-				$this->pathParams[$pathExploded[$i]] = $pathExploded[$i+1];
-				
-			}
-			
-		}
+			$pathExploded = explode('/',$_SERVER['PATH_INFO']);
+			array_shift($pathExploded);
 		
-		//urlParams
-		$this->urlParams=array();
-		
-		$queryStringArray = explode('&',$_SERVER['REDIRECT_QUERY_STRING']);
-				
-		foreach($queryStringArray as $param){
+			for($i=0 , $length = count($pathExploded); $i<$length ; $i+=2){
 			
-			$param = explode('=',$param);
-			if($param[0]!=null){
-				$this->urlParams[$param[0]] = urldecode($param[1]);
+				if(isset($pathExploded[$i+1])){
+					$this->pathParams[$pathExploded[$i]] = $pathExploded[$i+1];
+				}
+			
 			}
 		
 		}
-		
-		//params
-		$this->params = array_merge($this->bodyParams,$this->pathParams,$this->urlParams);
 		
 		//languages
 		$this->languages = explode(',',$this->headers['Accept-Language']);

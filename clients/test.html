@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+
+<html>
+
+	<head>
+		<title>Test</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" ></script>
+	</head>
+
+	<body>
+		
+		<h1>Test</h1>
+		
+		<script>
+		
+		$.ajax({
+			type: "GET",
+			url: "http://localhost/gateres/users/a?name=b",
+			data: { dataBody: "c" }
+		}).done(function( msg ){
+			alert( 'done' );
+		});
+		
+		</script>
+
+	</body>
+
+</html>
