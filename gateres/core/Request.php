@@ -6,8 +6,11 @@ namespace gateres\core;
 class Request{
 	
 	public $headers;
+	
 	public $method;
-	public $body;
+	
+	public $username;
+	public $password;
 	
 	public $urlParams;
 	public $bodyParams;
@@ -24,8 +27,9 @@ class Request{
 		//method
 		$this->method = $_SERVER['REQUEST_METHOD'];
 		
-		//body
-		$this->body = file_get_contents('php://input');
+		//username and password
+		$this->username = isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : null;
+		$this->password = isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : null;
 		
 		//urlParams (parse_str automatically urldecodes values)
 		if(isset($_SERVER['REDIRECT_QUERY_STRING'])){
@@ -33,7 +37,7 @@ class Request{
 		}
 		
 		//bodyParams (parse_str automatically urldecodes values)
-		parse_str($this->body,$this->bodyParams);
+		parse_str(file_get_contents('php://input'),$this->bodyParams);
 
 		//pathParams
 		$this->pathParams = array();

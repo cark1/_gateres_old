@@ -71,13 +71,6 @@ class Response{
 	}//setStatus
 	
 	
-	public function setBody($_body){
-		
-		$this->body = $_body;
-		
-	}//setBody
-	
-	
 	public function addToBody($_key,$_value){
 		
 		$this->body[$_key] = $_value;

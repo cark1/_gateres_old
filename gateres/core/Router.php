@@ -17,7 +17,7 @@ class Router{
 		end($this->request->pathParams);
 		$lastKey = key($this->request->pathParams);
 		
-		$controller = $GLOBALS['APP_DIR'].'\\controllers\\'.$lastKey;
+		$controller = $GLOBALS['APP_DIR'].'\\controllers\\'.$lastKey.'Controller';
 		$this->callController($controller, $this->request->method);
 		
 	}//__construct

@@ -27,7 +27,7 @@ class Controller{
 	}//urlParam
 	
 	
-	protected function bodyParam($_paramName,$_value=null){
+	protected function bodyParam($_paramName){
 		
 		if(isset($this->request->bodyParams[$_paramName]) == false){
 			return null;
@@ -38,7 +38,7 @@ class Controller{
 	}//bodyParam
 	
 	
-	protected function pathParam($_paramName,$_value=null){
+	protected function pathParam($_paramName){
 		
 		if(isset($this->request->pathParams[$_paramName]) == false){
 			return null;

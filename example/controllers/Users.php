@@ -50,7 +50,7 @@ class Users extends Controller{
 		$user->id = $id;
 		
 		$this->response->setStatus(Response::OK);
-		$this->response->setBody($user);
+		$this->response->addToBody('user',$user);
 		$this->response->send();
 		
 	}//getUserById
@@ -64,7 +64,7 @@ class Users extends Controller{
 		$user->name = $name;
 		
 		$this->response->setStatus(Response::OK);
-		$this->response->setBody($user);
+		$this->response->addToBody('user',$user);
 		$this->response->send();
 		
 	}//getUserByName
