@@ -50,8 +50,11 @@ class TokenController extends Controller{
 	private function createTokenByPassword(){
 		
 		/*
-		$user = User::getUserByPassword($this->request->username, $this->request->password);
-		$token = new Token($user);
+		$idUser = User::getIdUserByPassword($this->request->username, $this->request->password);
+		$token = new Token();
+		$token->expire = 34524;
+		$token->tokenType = Token::BEARS;
+		$token->accessToken = Token::generateAccessToken($idUser);
 		$tokenValue = $token->create();
 		
 		$this->response->setStatus(Response::CREATED);
