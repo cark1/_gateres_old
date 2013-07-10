@@ -7,7 +7,6 @@ use oauth2\models\User;
 
 class Database{
    
-	//istanza univoca della classe
 	private static $instance = null;
 	private static $pdo;
 	private static $stmt;
@@ -28,7 +27,6 @@ class Database{
 	}//getInstance
 	
 	
-	//esegue la query passata
 	public function setQuery($query){
 
 		self::$stmt = self::$pdo->prepare($query);
