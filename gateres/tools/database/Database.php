@@ -3,7 +3,6 @@
 namespace gateres\tools\database;
 
 use PDO;
-use oauth2\models\User;
 
 class Database{
    
@@ -18,7 +17,7 @@ class Database{
 		  
 			self::$instance = new Database();
 
-		  	self::$pdo=new PDO('mysql:host='.$GLOBALS['DB_HOST'].';port='.$GLOBALS['DB_PORT'].';dbname='.$GLOBALS['DB_NAME'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWORD']);
+		  	self::$pdo = new PDO('mysql:host='.$GLOBALS['DB_HOST'].';port='.$GLOBALS['DB_PORT'].';dbname='.$GLOBALS['DB_NAME'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWORD']);
 
 	  	}
 	
