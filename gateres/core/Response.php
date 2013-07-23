@@ -78,6 +78,17 @@ class Response{
 	}//addToBody
 	
 	
+	public function addErrorToBody($_code, $_message){
+		
+		$error = array();
+		$error['code'] = $_code;
+		$error['message'] = $_message;
+		
+		$this->addToBody('error',$error);
+		
+	}//addErrorToBody
+	
+	
 	public function send(){
 
 		echo json_encode($this->body);
