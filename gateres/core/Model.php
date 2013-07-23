@@ -109,9 +109,12 @@ class Model{
 		
 		$done = $this->db->execute();
 	
-		if($done == false) return -1;
+		if($done == false) return false;
+		
+		//return 0 also if the where clause match, but no one value changes.
+		if($this->db->getRowsAffected() <= 0) return false;
 			
-		return $this->db->getRowsAffected(); //return 0 also if the where clause match, but no one value changes.
+		return true; 
 		
 	}//update
 	
@@ -121,13 +124,16 @@ class Model{
 		$query = "DELETE FROM ".$this->tableName." WHERE id = :id";
 		
 		$this->db->setQuery($query);
-		
 		$this->db->bindParam(':id',$this->id);
 		
 		$done = $this->db->execute();
-		if($done == false) return -1;
+		
+		if($done == false) return false;
+		
+		//return 0 also if the where clause match, but no one value changes.
+		if($this->db->getRowsAffected() <= 0) return false;
 			
-		return $this->db->getRowsAffected();
+		return true;
 		
 	}//delete
 	
