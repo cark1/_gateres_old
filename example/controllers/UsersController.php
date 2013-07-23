@@ -154,6 +154,7 @@ class UsersController extends Controller{
 			$this->response->send();
 		}
 		
+		
 	}//updateUser
 	
 	

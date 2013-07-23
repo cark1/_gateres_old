@@ -18,7 +18,10 @@ $router = new Router($request,$response);
 
 function __autoload($class){
 	
-	$path = $GLOBALS['GATERES_PATH'].str_replace('\\', '/', $class).'.php';	
-	if(file_exists($path))require_once($path);
+	$pathGateres = $GLOBALS['GATERES_PATH'].str_replace('\\', '/', $class).'.php';	
+	$pathApp = '../'.str_replace('\\', '/', $class).'.php';
+	
+	if(file_exists($pathGateres)) require_once($pathGateres);
+	else if(file_exists($pathApp)) require_once($pathApp);
 	
 }//__autoload

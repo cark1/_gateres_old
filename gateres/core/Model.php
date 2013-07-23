@@ -110,8 +110,8 @@ class Model{
 		$done = $this->db->execute();
 	
 		if($done == false) return -1;
-					
-		return $this->db->getRowsAffected();
+			
+		return $this->db->getRowsAffected(); //return 0 also if the where clause match, but no one value changes.
 		
 	}//update
 	
