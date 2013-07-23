@@ -22,6 +22,7 @@ class Random{
 		return $password;
 		
 	}//getRandomString
-	
+
+}//Random	
 
 ?>
