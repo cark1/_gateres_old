@@ -43,7 +43,10 @@ class Model{
 		
 		$done = $this->db->execute();
 		
-		$this->id = $this->db->getLastInsertId();
+		if($this->id == null){
+			//autoincrement id
+			$this->id = $this->db->getLastInsertId();
+		}
 		
 		return $done;
 		

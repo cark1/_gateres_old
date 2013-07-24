@@ -52,7 +52,6 @@ class TokenController extends Controller{
 	
 	private function createTokenByPassword(){
 		
-		
 		$user = User::getUserByEmailAndPassword($this->request->username, $this->request->password);
         
         $currentTime = time();

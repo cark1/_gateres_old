@@ -28,8 +28,8 @@ class Token extends Model{
 		
 		$randomString = bin2hex(openssl_random_pseudo_bytes($len, $strong));
 
-		if ($strong) {
-			return $randomString;
+		if($strong){
+			return substr($randomString, 0, $len);
 		}
 
 	}//generateToken

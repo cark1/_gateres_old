@@ -11,6 +11,7 @@ class Request{
 	
 	public $username;
 	public $password;
+	public $token;
 	
 	public $urlParams;
 	public $bodyParams;
@@ -30,6 +31,7 @@ class Request{
 		//username and password
 		$this->username = isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : null;
 		$this->password = isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : null;
+		$this->token = $this->username === 'token' ? $this->password : null;
 		
 		//urlParams (parse_str automatically urldecodes values)
 		if(isset($_SERVER['REDIRECT_QUERY_STRING'])){
