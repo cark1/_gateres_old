@@ -10,6 +10,9 @@ use oauth2\models\Grant;
 
 use gateres\core\Model;
 
+use oauth2\models\User;
+use oauth2\models\Token;
+
 
 class TokenController extends Controller{
 	
@@ -22,7 +25,7 @@ class TokenController extends Controller{
 		
 		if(	isset($this->request->username) && 
 			isset($this->request->password) &&
-			$this->bodyParam('type_grant') === Grant::PASSWORD ){
+			$this->bodyParam('typeGrant') === Grant::PASSWORD ){
 				
 				$this->createTokenByPassword();
 				
@@ -49,20 +52,32 @@ class TokenController extends Controller{
 	
 	private function createTokenByPassword(){
 		
-		/*
-		$idUser = User::getIdUserByPassword($this->request->username, $this->request->password);
-		$token = new Token();
-		$token->expire = 34524;
-		$token->tokenType = Token::BEARS;
-		$token->accessToken = Token::generateAccessToken($idUser);
-		$tokenValue = $token->create();
 		
+		$user = User::getUserByEmailAndPassword($this->request->username, $this->request->password);
+        
+        $currentTime = time();
+        
+		$accessToken = new Token();
+        $accessToken->id = Token::generateToken($GLOBALS['LEN_TOKEN']);
+		$accessToken->idUser = $user->id;
+		$accessToken->type = Token::ACCESS;
+		$accessToken->creationTime = $currentTime;
+        $accessToken->expireTime = $currentTime + $GLOBALS['EXPIRE_IN_ACCESS'];
+		$accessTokenDone = $accessToken->create();
+		
+        $refreshToken = new Token();
+        $refreshToken->id = Token::generateToken($GLOBALS['LEN_TOKEN']);
+		$refreshToken->idUser = $user->id;
+		$refreshToken->type = Token::REFRESH;
+		$refreshToken->creationTime = $currentTime;
+        $refreshToken->expireTime = $currentTime + $GLOBALS['EXPIRE_IN_REFRESH'];
+		$refreshTokenDone = $refreshToken->create();
+        
 		$this->response->setStatus(Response::CREATED);
-		$this->response->addParam('token',$tokenValue);
+		$this->response->addToBody('accessToken',$accessToken);
+        $this->response->addToBody('refreshToken',$refreshToken);
 		$this->response->send();
-		*/
 		
-		print_r('token');
 		
 	}//createTokenByPassword
 	
