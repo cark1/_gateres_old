@@ -54,28 +54,37 @@ class TokenController extends Controller{
 		
 		$user = User::getUserByEmailAndPassword($this->request->username, $this->request->password);
         
-        $currentTime = time();
+		if($user != null){
+
+        	$currentTime = time();
         
-		$accessToken = new Token();
-        $accessToken->id = Token::generateToken($GLOBALS['LEN_TOKEN']);
-		$accessToken->idUser = $user->id;
-		$accessToken->type = Token::ACCESS;
-		$accessToken->creationTime = $currentTime;
-        $accessToken->expireTime = $currentTime + $GLOBALS['EXPIRE_IN_ACCESS'];
-		$accessTokenDone = $accessToken->create();
+			$accessToken = new Token();
+	        $accessToken->id = Token::generateToken($GLOBALS['LEN_TOKEN']);
+			$accessToken->idUser = $user->id;
+			$accessToken->type = Token::ACCESS;
+			$accessToken->creationTime = $currentTime;
+	        $accessToken->expireTime = $currentTime + $GLOBALS['EXPIRE_IN_ACCESS'];
+			$accessTokenDone = $accessToken->create();
 		
-        $refreshToken = new Token();
-        $refreshToken->id = Token::generateToken($GLOBALS['LEN_TOKEN']);
-		$refreshToken->idUser = $user->id;
-		$refreshToken->type = Token::REFRESH;
-		$refreshToken->creationTime = $currentTime;
-        $refreshToken->expireTime = $currentTime + $GLOBALS['EXPIRE_IN_REFRESH'];
-		$refreshTokenDone = $refreshToken->create();
+	        $refreshToken = new Token();
+	        $refreshToken->id = Token::generateToken($GLOBALS['LEN_TOKEN']);
+			$refreshToken->idUser = $user->id;
+			$refreshToken->type = Token::REFRESH;
+			$refreshToken->creationTime = $currentTime;
+	        $refreshToken->expireTime = $currentTime + $GLOBALS['EXPIRE_IN_REFRESH'];
+			$refreshTokenDone = $refreshToken->create();
         
-		$this->response->setStatus(Response::CREATED);
-		$this->response->addToBody('accessToken',$accessToken);
-        $this->response->addToBody('refreshToken',$refreshToken);
-		$this->response->send();
+			$this->response->setStatus(Response::CREATED);
+			$this->response->addToBody('accessToken',$accessToken);
+	        $this->response->addToBody('refreshToken',$refreshToken);
+			$this->response->send();
+		
+		}else{
+			
+			$this->response->setStatus(Response::FORBIDDEN);
+			$this->response->send();
+			
+		}
 		
 		
 	}//createTokenByPassword
